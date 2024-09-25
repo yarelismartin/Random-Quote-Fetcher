@@ -1,24 +1,31 @@
-// import { Button } from 'react-bootstrap'; // TODO: COMMENT IN FOR AUTH
-// import { signOut } from '../utils/auth'; // TODO: COMMENT IN FOR AUTH
-// import { useAuth } from '../utils/context/authContext'; // TODO: COMMENT IN FOR AUTH
+import React, { useEffect, useState } from 'react';
 
-function Home() {
-  // const { user } = useAuth(); // TODO: COMMENT IN FOR AUTH
+import { Button } from 'react-bootstrap';
+import getQuote from '../api/quotes';
 
-  const user = { displayName: 'Dr. T' }; // TODO: COMMENT OUT FOR AUTH
+export default function Home() {
+  const [randomQuote, setRandomQuote] = useState({});
+
+  const getSingleQuote = () => {
+    getQuote().then((data) => {
+      // If the API returns an array of quotes, use the first one
+      if (data.length > 0) {
+        setRandomQuote(data[0]);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getSingleQuote();
+  }, []); // Empty dependency array to ensure it runs only once on mount
+
   return (
-    <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
-      style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
-      }}
-    >
-      <h1>Hello {user.displayName}! </h1>
-    </div>
+    <>
+      <h1>Get your quote today!</h1>
+      <p>{randomQuote?.quote}</p>
+      <p>{randomQuote?.author}</p>
+      <p>{randomQuote?.category}</p>
+      <Button onClick={getSingleQuote}> New Quote</Button>
+    </>
   );
 }
-
-export default Home;
