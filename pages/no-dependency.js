@@ -3,12 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import getQuote from '../api/quotes';
 
-export default function Home() {
+export default function NoDependency() {
   const [randomQuote, setRandomQuote] = useState({});
 
   const getSingleQuote = () => {
     getQuote().then((data) => {
-      // If the API returns an array of quotes, use the first one
       if (data.length > 0) {
         setRandomQuote(data[0]);
       }
@@ -18,7 +17,7 @@ export default function Home() {
   // Fetch a quote on initial render
   useEffect(() => {
     getSingleQuote();
-  }, []); // Empty dependency (Run Once on Mount)
+  }); // No Dependency (Run on Every Render)
 
   return (
     <>
