@@ -18,6 +18,7 @@ export default function WithDependencies() {
   useEffect(() => {
     getSingleQuote();
   }, [randomQuote]); // With Dependency (Run on Dependency Change)
+
   return (
     <>
       <h1>Get your quote today!</h1>
